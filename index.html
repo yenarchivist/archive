@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yenament Archive</title>
+    <meta
+      name="description"
+      content="예나의 AI 레퍼런스 아카이브. 이미지, 영상, 프롬프트, 외부 툴을 모으고 관찰하는 공간."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/">
+        <span class="brand-mark">Y</span>
+        <span>Yenament Archive</span>
+      </a>
+      <nav class="nav">
+        <a href="#references">References</a>
+        <a href="#tools">Tools</a>
+        <a href="https://studio.yenament.com">Studio</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Reference first, create later</p>
+        <h1>좋은 프롬프트와 이미지를 모아두는<br />AI 레퍼런스 아카이브</h1>
+        <p class="hero-copy">
+          텔레그램으로 보낸 이미지, 영상, 프롬프트를 저장하고 나중에 작업실에서 다시 꺼내 쓰기 위한 공간.
+          지금은 수집과 관찰에 집중한다.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#references">레퍼런스 보기</a>
+          <a class="button ghost" href="https://studio.yenament.com">Studio로 가기</a>
+        </div>
+      </section>
+
+      <section class="status-panel" aria-label="archive pipeline status">
+        <div>
+          <span class="status-dot"></span>
+          Telegram → n8n → R2 pipeline ready
+        </div>
+        <div>Next: gallery index 연결</div>
+      </section>
+
+      <section id="references" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Archive categories</p>
+          <h2>무엇을 모을까</h2>
+        </div>
+        <div class="grid cards">
+          <article class="card">
+            <span class="card-icon">🖼</span>
+            <h3>Images</h3>
+            <p>캐릭터 시트, 포즈, 색감, 구도, 의상 레퍼런스.</p>
+          </article>
+          <article class="card">
+            <span class="card-icon">🎬</span>
+            <h3>Videos</h3>
+            <p>카메라 무빙, 컷 구성, 광고 톤, AI 영상 패턴.</p>
+          </article>
+          <article class="card">
+            <span class="card-icon">✍️</span>
+            <h3>Prompts</h3>
+            <p>나중에 yenarity, dingu, 영상 실험에 응용할 프롬프트.</p>
+          </article>
+          <article class="card">
+            <span class="card-icon">🧪</span>
+            <h3>Experiments</h3>
+            <p>따라 해보고 싶은 생성 방식, 워크플로우, 실패 기록.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="tools" class="section split">
+        <div>
+          <p class="eyebrow">External tools</p>
+          <h2>다른 사람이 만든 실험실도 여기서 정리</h2>
+          <p>
+            외부 Vercel 프로젝트를 통째로 넣기보다 카드로 큐레이션한다.
+            링크가 바뀌거나 iframe이 막혀도 아카이브 구조는 유지된다.
+          </p>
+        </div>
+        <div class="tool-list">
+          <a class="tool-item" href="#" aria-disabled="true">
+            <span>Prompt Lab</span>
+            <small>coming soon</small>
+          </a>
+          <a class="tool-item" href="#" aria-disabled="true">
+            <span>Video Reference Board</span>
+            <small>planned</small>
+          </a>
+          <a class="tool-item" href="#" aria-disabled="true">
+            <span>Character Sheet Library</span>
+            <small>planned</small>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>© Yenament Archive</span>
+      <span>Collect → Observe → Remix</span>
+    </footer>
+  </body>
+</html>
