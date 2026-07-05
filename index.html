@@ -6,17 +6,18 @@
     <title>yenament · archive</title>
     <meta
       name="description"
-      content="예나의 AI Refrence Archive. 이미지, 영상, 프롬프트, 외부 툴을 모으고 관찰하는 공간."
+      content="예나의 AI reference archive. 이미지, 영상, 프롬프트, 외부 툴을 모으고 관찰하는 공간."
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <header class="site-header">
       <a class="brand" href="/">
-        <span class="brand-mark">Y</span>
-        <span>Yenament Archive</span>
+        <span class="brand-mark">y</span>
+        <span>yenament archive</span>
       </a>
       <nav class="nav">
+        <a href="#latest">Latest</a>
         <a href="#references">References</a>
         <a href="#tools">Tools</a>
         <a href="https://studio.yenament.com" target="_blank" rel="noopener noreferrer">Studio</a>
@@ -25,15 +26,15 @@
 
     <main>
       <section class="hero">
-        <p class="eyebrow">Reference first, create later</p>
-        <h1>좋은 프롬프트와 이미지를 모아두는<br />AI Refrence Archive</h1>
+        <p class="eyebrow">reference first, create later</p>
+        <h1>좋은 프롬프트와 이미지를 모아두는<br />AI reference archive</h1>
         <p class="hero-copy">
           텔레그램으로 보낸 이미지, 영상, 프롬프트를 저장하고 나중에 작업실에서 다시 꺼내 쓰기 위한 공간.
           지금은 수집과 관찰에 집중한다.
         </p>
         <div class="hero-actions">
-          <a class="button primary" href="#references">레퍼런스 보기</a>
-          <a class="button ghost" href="https://studio.yenament.com" target="_blank" rel="noopener noreferrer">Studio로 가기</a>
+          <a class="button primary" href="#latest">최신 레퍼런스 보기</a>
+          <a class="button ghost" href="https://studio.yenament.com" target="_blank" rel="noopener noreferrer">studio로 가기</a>
         </div>
       </section>
 
@@ -45,9 +46,63 @@
         <div>Next: gallery index 연결</div>
       </section>
 
+      <section id="latest" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">latest references</p>
+          <h2>최근 저장한 레퍼런스</h2>
+          <p class="section-copy">지금은 샘플 카드. 다음 단계에서 텔레그램으로 저장한 실제 이미지와 프롬프트가 여기에 들어온다.</p>
+        </div>
+        <div class="reference-grid">
+          <article class="reference-card">
+            <div class="reference-preview gradient-pink">
+              <span>figure</span>
+            </div>
+            <div class="reference-body">
+              <p class="reference-type">image · character sheet</p>
+              <h3>Figure Skating Character Sheet</h3>
+              <p class="reference-prompt">dynamic figure skating pose, hot pink costume, emotional cinematic glow, turnaround and expression grid</p>
+              <div class="reference-meta">
+                <span>project: unclassified</span>
+                <span>2026-07-05</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="reference-card">
+            <div class="reference-preview gradient-dingu">
+              <span>dingu</span>
+            </div>
+            <div class="reference-body">
+              <p class="reference-type">image · mascot reference</p>
+              <h3>Dingu Reference</h3>
+              <p class="reference-prompt">black and white border collie puppy CEO, one ear folded, bow tie, expressive sticker sheet</p>
+              <div class="reference-meta">
+                <span>project: unclassified</span>
+                <span>2026-07-05</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="reference-card">
+            <div class="reference-preview gradient-anime">
+              <span>style</span>
+            </div>
+            <div class="reference-body">
+              <p class="reference-type">image · style reference</p>
+              <h3>Pink Anime Style</h3>
+              <p class="reference-prompt">soft pink palette, glossy highlights, clean character render, warm studio lighting, cute but polished</p>
+              <div class="reference-meta">
+                <span>project: unclassified</span>
+                <span>2026-07-05</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section id="references" class="section">
         <div class="section-heading">
-          <p class="eyebrow">Archive categories</p>
+          <p class="eyebrow">archive categories</p>
           <h2>무엇을 모을까</h2>
         </div>
         <div class="grid cards">
@@ -76,7 +131,7 @@
 
       <section id="tools" class="section split">
         <div>
-          <p class="eyebrow">External tools</p>
+          <p class="eyebrow">external tools</p>
           <h2>다른 사람이 만든 실험실도 여기서 정리</h2>
           <p>
             외부 Vercel 프로젝트를 통째로 넣기보다 카드로 큐레이션한다.
