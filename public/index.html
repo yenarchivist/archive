@@ -155,7 +155,8 @@
         return Array.isArray(item.images) ? item.images.length : 1;
     }
       function buildCard(item) {
-        const title = item.title || item.image_key?.split('/').pop() || item.images?.[0]?.image_key?.split('/').pop() || 'untitled reference';   const prompt = item.prompt || '';
+        const title = item.title || item.image_key?.split('/').pop() || item.images?.[0]?.image_key?.split('/').pop() || 'untitled reference';
+        const prompt = item.prompt || '';
         const project = item.project || 'reference';
         const date = formatDate(item.created_at);
         const imageUrl = getCoverImage(item);
@@ -191,15 +192,9 @@
           const response = await fetch(`${INDEX_URL}?t=${Date.now()}`);
           if (!response.ok) throw new Error('index fetch failed');
           const data = await response.json();
-          const seen = new Set();
           const items = data
             .filter((item) => getCoverImage(item))
             .sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0))
-            .filter((item) => {
-              if (seen.has(item.image_key)) return false;
-              seen.add(item.image_key);
-              return true;
-            })
             .slice(0, 24);
 
           if (!items.length) {
