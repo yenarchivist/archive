@@ -43,60 +43,17 @@
           <span class="status-dot"></span>
           Telegram → n8n → R2 pipeline ready
         </div>
-        <div>Next: gallery index 연결</div>
+        <div>Live: gallery index 연결됨</div>
       </section>
 
       <section id="latest" class="section">
         <div class="section-heading">
           <p class="eyebrow">latest references</p>
           <h2>최근 저장한 레퍼런스</h2>
-          <p class="section-copy">지금은 샘플 카드. 다음 단계에서 텔레그램으로 저장한 실제 이미지와 프롬프트가 여기에 들어온다.</p>
+          <p class="section-copy">텔레그램으로 저장한 이미지와 프롬프트를 gallery-index.json에서 불러온다.</p>
         </div>
-        <div class="reference-grid">
-          <article class="reference-card">
-            <div class="reference-preview gradient-pink">
-              <span>figure</span>
-            </div>
-            <div class="reference-body">
-              <p class="reference-type">image · character sheet</p>
-              <h3>Figure Skating Character Sheet</h3>
-              <p class="reference-prompt">dynamic figure skating pose, hot pink costume, emotional cinematic glow, turnaround and expression grid</p>
-              <div class="reference-meta">
-                <span>project: unclassified</span>
-                <span>2026-07-05</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="reference-card">
-            <div class="reference-preview gradient-dingu">
-              <span>dingu</span>
-            </div>
-            <div class="reference-body">
-              <p class="reference-type">image · mascot reference</p>
-              <h3>Dingu Reference</h3>
-              <p class="reference-prompt">black and white border collie puppy CEO, one ear folded, bow tie, expressive sticker sheet</p>
-              <div class="reference-meta">
-                <span>project: unclassified</span>
-                <span>2026-07-05</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="reference-card">
-            <div class="reference-preview gradient-anime">
-              <span>style</span>
-            </div>
-            <div class="reference-body">
-              <p class="reference-type">image · style reference</p>
-              <h3>Pink Anime Style</h3>
-              <p class="reference-prompt">soft pink palette, glossy highlights, clean character render, warm studio lighting, cute but polished</p>
-              <div class="reference-meta">
-                <span>project: unclassified</span>
-                <span>2026-07-05</span>
-              </div>
-            </div>
-          </article>
+        <div id="referenceGrid" class="reference-grid" aria-live="polite">
+          <p class="loading-message">레퍼런스 불러오는 중...</p>
         </div>
       </section>
 
@@ -159,5 +116,102 @@
       <span>© yenament</span>
       <span>Collect → Observe → Remix</span>
     </footer>
+
+    <script>
+      const INDEX_URL = 'https://gallery.yenament.com/gallery-index.json';
+      const grid = document.querySelector('#referenceGrid');
+
+      function formatDate(value) {
+        if (!value) return 'no date';
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return value.slice(0, 10);
+        return date.toISOString().slice(0, 10);
+      }
+
+      function escapeHtml(value = '') {
+        return String(value)
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&#039;');
+      }
+
+      async function copyText(text, button) {
+        try {
+          await navigator.clipboard.writeText(text || '');
+          const original = button.textContent;
+          button.textContent = 'Copied';
+          setTimeout(() => (button.textContent = original), 1200);
+        } catch (error) {
+          button.textContent = 'Copy failed';
+        }
+      }
+
+      function buildCard(item) {
+        const title = item.title || item.image_key?.split('/').pop() || 'untitled reference';
+        const prompt = item.prompt || '';
+        const project = item.project || 'reference';
+        const date = formatDate(item.created_at);
+        const imageUrl = item.image_url || '';
+        const type = item.mime_type || 'image';
+
+        return `
+          <article class="reference-card">
+            <a class="reference-image-link" href="${escapeHtml(imageUrl)}" target="_blank" rel="noopener noreferrer">
+              <img class="reference-image" src="${escapeHtml(imageUrl)}" alt="${escapeHtml(title)}" loading="lazy" />
+            </a>
+            <div class="reference-body">
+              <p class="reference-type">${escapeHtml(type)} · ${escapeHtml(item.source || 'telegram')}</p>
+              <h3>${escapeHtml(title)}</h3>
+              <p class="reference-prompt">${escapeHtml(prompt || 'no prompt')}</p>
+              <div class="reference-actions">
+                <button type="button" data-copy="prompt" data-value="${escapeHtml(prompt)}">Copy prompt</button>
+                <button type="button" data-copy="url" data-value="${escapeHtml(imageUrl)}">Copy image URL</button>
+              </div>
+              <div class="reference-meta">
+                <span>project: ${escapeHtml(project)}</span>
+                <span>${escapeHtml(date)}</span>
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
+      async function loadReferences() {
+        try {
+          const response = await fetch(`${INDEX_URL}?t=${Date.now()}`);
+          if (!response.ok) throw new Error('index fetch failed');
+          const data = await response.json();
+          const seen = new Set();
+          const items = data
+            .filter((item) => item.image_url && item.image_key)
+            .sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0))
+            .filter((item) => {
+              if (seen.has(item.image_key)) return false;
+              seen.add(item.image_key);
+              return true;
+            })
+            .slice(0, 24);
+
+          if (!items.length) {
+            grid.innerHTML = '<p class="loading-message">아직 표시할 레퍼런스가 없어.</p>';
+            return;
+          }
+
+          grid.innerHTML = items.map(buildCard).join('');
+        } catch (error) {
+          grid.innerHTML = '<p class="loading-message">gallery index를 불러오지 못했어. 잠시 후 다시 확인해줘.</p>';
+        }
+      }
+
+      grid.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-copy]');
+        if (!button) return;
+        copyText(button.dataset.value, button);
+      });
+
+      loadReferences();
+    </script>
   </body>
 </html>
